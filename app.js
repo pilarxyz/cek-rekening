@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 
-const ipWhitelist = [""];
+const ipWhitelist = ["xxx"];
 
 function checkWhitelistedIp(req, res, next) {
   const clientIp =
@@ -22,13 +22,13 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
 
-app.use(checkWhitelistedIp);
+// app.use(checkWhitelistedIp);
 
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/api/bank", async (req, res) => {
+app.get("/api/bank", checkWhitelistedIp, async (req, res) => {
   try {
     const response = await axios.get(
       "https://api-rekening.lfourr.com/listBank"
@@ -39,7 +39,7 @@ app.get("/api/bank", async (req, res) => {
   }
 });
 
-app.get("/api/emoney", async (req, res) => {
+app.get("/api/emoney", checkWhitelistedIp, async (req, res) => {
   try {
     const response = await axios.get(
       "https://api-rekening.lfourr.com/listEmoney"
@@ -50,7 +50,7 @@ app.get("/api/emoney", async (req, res) => {
   }
 });
 
-app.post("/checkAccount", async (req, res) => {
+app.post("/checkAccount", checkWhitelistedIp, async (req, res) => {
   const { layanan, bankCode, accountNumber } = req.body;
   const apiUrl =
     layanan === "bank"
