@@ -2,18 +2,10 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 
-const ipWhitelist = ["xxx"];
-
-function checkWhitelistedIp(req, res, next) {
-  const clientIp =
-    req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-
-  if (clientIp.substr(0, 7) === "::ffff:") {
-    clientIp = clientIp.substr(7);
-  }
-
-  if (!ipWhitelist.includes(clientIp.split(",")[0])) {
-    return res.status(403).send("Access Denied: " + clientIp);
+function checkReferer(req, res, next) {
+  const referer = req.headers.referer;
+  if (!referer || !referer.startsWith("https://cek-rekening.lfourr.com/")) {
+    return res.status(403).send("Access Denied");
   }
   next();
 }
@@ -22,13 +14,11 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
 
-// app.use(checkWhitelistedIp);
-
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/api/bank", checkWhitelistedIp, async (req, res) => {
+app.get("/api/bank", checkReferer, async (req, res) => {
   try {
     const response = await axios.get(
       "https://api-rekening.lfourr.com/listBank"
@@ -39,7 +29,7 @@ app.get("/api/bank", checkWhitelistedIp, async (req, res) => {
   }
 });
 
-app.get("/api/emoney", checkWhitelistedIp, async (req, res) => {
+app.get("/api/emoney", checkReferer, async (req, res) => {
   try {
     const response = await axios.get(
       "https://api-rekening.lfourr.com/listEmoney"
@@ -50,7 +40,7 @@ app.get("/api/emoney", checkWhitelistedIp, async (req, res) => {
   }
 });
 
-app.post("/checkAccount", checkWhitelistedIp, async (req, res) => {
+app.post("/checkAccount", checkReferer, async (req, res) => {
   const { layanan, bankCode, accountNumber } = req.body;
   const apiUrl =
     layanan === "bank"
@@ -68,6 +58,6 @@ app.post("/checkAccount", checkWhitelistedIp, async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(3002, () => {
+  console.log("Server is running on port 3002");
 });
