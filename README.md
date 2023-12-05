@@ -20,6 +20,8 @@ Aplikasi ini menggunakan API berikut untuk mendapatkan data:
 
 Untuk menggunakan API ini, Anda perlu mendapatkan akses yang disetujui. Silakan hubungi kami untuk whitelist IP sebelum menggunakan API ini.
 
+-- Update: API ini sudah dapat digunakan secara publik.
+
 ## Peringatan
 
 Gunakan informasi yang diperoleh dari API ini secara bijak dan bertanggung jawab. Jangan menggunakan informasi ini untuk tujuan yang tidak etis atau ilegal.
