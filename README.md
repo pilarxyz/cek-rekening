@@ -12,7 +12,7 @@ Aplikasi web untuk memeriksa informasi rekening bank dan e-Wallet di Indonesia. 
 Aplikasi ini menggunakan API berikut untuk mendapatkan data:
 
 - **Get List Bank**: `https://api-rekening.lfourr.com/listBank`
-- **Get List E-Wallet**: `https://api-rekening.lfourr.com/listEmoney`
+- **Get List E-Wallet**: `https://api-rekening.lfourr.com/listEwallet`
 - **Get Account Bank**: `https://api-rekening.lfourr.com/getBankAccount?bankCode=${bankCode}&accountNumber=${accountNumber}`
 - **Get Account E-Wallet**: `https://api-rekening.lfourr.com/getEwalletAccount?bankCode=${bankCode}&accountNumber=${accountNumber}`
 
