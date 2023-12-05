@@ -29,10 +29,10 @@ app.get("/api/bank", checkReferer, async (req, res) => {
   }
 });
 
-app.get("/api/emoney", checkReferer, async (req, res) => {
+app.get("/api/ewallet", checkReferer, async (req, res) => {
   try {
     const response = await axios.get(
-      "https://api-rekening.lfourr.com/listEmoney"
+      "https://api-rekening.lfourr.com/listEwallet"
     );
     res.json(response.data);
   } catch (error) {
